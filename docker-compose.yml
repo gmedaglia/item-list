@@ -1,0 +1,23 @@
+version: "3"
+services:
+  web:
+    image: "php:7.3-apache"
+    container_name: "ilweb"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ".:/var/www/html/"
+    links:
+      - db
+  db:
+    image: "mongo"
+    container_name: "ildb"
+    environment:
+      - MONGO_INITDB_DATABASE=itemlist
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    ports:
+      - "27017-27019:27017-27019"
