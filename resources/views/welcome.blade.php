@@ -10,11 +10,16 @@
         <link media="all" type="text/css" rel="stylesheet" href="/css/app.css" />
 
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/black-tie/jquery-ui.min.css" rel="stylesheet">
 
-        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <style type="text/css">
+            body {
+                font-family: 'Roboto', sans-serif;
+                font-size: 13px;
+            }
+
+        </style>
     </head>
-    <body class="p-5">
+    <body class="p-4">
 
         <div id="page" name="sasas">
 
@@ -26,6 +31,21 @@
                 </div>
                 <div id="item-list"></div>
 
+<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 0; right: 0;">
+    <div class="toast-header">
+        <strong class="mr-auto">Bootstrap</strong>
+        <small>11 mins ago</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        Order saved!
+    </div>
+</div>
+</div>           
+
                 @include('musta') 
 
             </div>
@@ -35,7 +55,7 @@
 
         @push('scripts')
             <script type="text/javascript" src="/js/app.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
             <script type="text/javascript">
                 var itemList = itemList();
                 $('#add-item').click(function(event) {

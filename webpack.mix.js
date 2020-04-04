@@ -17,9 +17,14 @@ mix.sass('resources/sass/app.scss', 'public/css/app.css')
         'public/css/app.css'
     ], 'public/css/app.css')
     .scripts([
-    	'./node_modules/jquery/dist/jquery.min.js',
-    	'./node_modules/jquery-ui/ui/widgets/sortable.js',
+    	'./node_modules/jquery/dist/jquery.js',
+    	'./node_modules/jquery-ui-dist/jquery-ui.js',
+    	'./node_modules/bootstrap/js/dist/util.js',
+    	'./node_modules/bootstrap/js/dist/toast.js',
     	'./node_modules/bootstrap/js/dist/modal.js',
+    	'./node_modules/handlebars/dist/handlebars.js',
+    	'./node_modules/lodash/core.js',
+    	'./node_modules/lodash/map.js',
     	'resources/js/app.js'
 	], 'public/js/app.js');
 

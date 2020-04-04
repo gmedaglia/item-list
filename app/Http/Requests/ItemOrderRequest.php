@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class ItemUpdateRequest extends ItemRequest
+class ItemOrderRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -11,8 +11,9 @@ class ItemUpdateRequest extends ItemRequest
      */
     public function rules()
     {
-        return parent::rules() + [
-            'order' => 'required|integer'
+        return [
+            '*.id' => 'required|exists:items,_id',
+            '*.order' => 'required|integer'
         ];
     } 
 }

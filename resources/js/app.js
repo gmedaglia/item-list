@@ -4,8 +4,9 @@
 function itemList(name) {
 
 	Handlebars.registerPartial("item", $('#tpl-item').html());
-
+$('.toast').toast('show');
 	function addItem() {
+		$('.toast').toast('show');
 		var item = {
         	image: 'EoLxZe3w1t7LgbAe1W33CLmGQiKR9ex3LFTESiHp.jpeg',
         	description: 'La cdtm All Boys!'			
@@ -36,10 +37,23 @@ function itemList(name) {
 	        $('#item-list').append(html);
 	        $('#items').sortable({
 	        	items: '.item',
+	        	start: function(event, ui) {
+	        		$('body').css('cursor', 'move');
+	        	},   	
 	        	stop: function(event, ui) {
-	        		console.log(ui, ui.helper);
-	        		a = $(this).sortable("serialize", {key: "sort"});
-	        		alert(a);
+	        		$('body').css('cursor', 'default');
+	        		var rowIds = $(this).sortable("toArray");
+	        		var requestBody = _.map(rowIds, function (item, index) {
+	        			return {"id": item.replace('item-', ''), "order": index};
+	        		});
+				    $.ajax({
+				    	method: 'post',
+				        url: "/api/items-order",
+				        contentType: 'application/json',
+				        data: JSON.stringify(requestBody)
+				    }).done(function(response) {
+				    	$('.toast').toast('show');
+				    });
 	        	}
 	        });
 

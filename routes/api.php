@@ -19,3 +19,4 @@ use Illuminate\Http\Request;
 
 Route::post('/images', 'API\ImageController@upload');
 Route::apiResource('items', 'API\ItemController');
+Route::post('/items-order', 'API\ItemController@updateOrder');

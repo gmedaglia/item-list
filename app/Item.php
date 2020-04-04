@@ -24,4 +24,9 @@ class Item extends Model
     {
     	return asset('storage/images/' . $this->attributes['image']);
     }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order');
+    }
 }
