@@ -8,7 +8,7 @@ use App\Http\Requests\ItemOrderRequest;
 use App\Item;
 use App\Http\Resources\ItemResource;
 use App\Http\Resources\ItemCollection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\DatabaseManager as DB;
 
 class ItemController extends Controller
 {   
@@ -88,10 +88,10 @@ class ItemController extends Controller
         return response(null, 204);
     }
 
-    public function updateOrder(ItemOrderRequest $request)
+    public function updateOrder(ItemOrderRequest $request, DB $db)
     {
         foreach ($request->all() as $orderConfig) {
-            DB::collection('items')
+            $db->collection('items')
                 ->where('_id', $orderConfig['id'])
                 ->update(['order' => $orderConfig['order']]);
         }

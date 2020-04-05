@@ -22,9 +22,9 @@ mix.sass('resources/sass/app.scss', 'public/css/app.css')
     	'./node_modules/bootstrap/js/dist/util.js',
     	'./node_modules/bootstrap/js/dist/toast.js',
     	'./node_modules/bootstrap/js/dist/modal.js',
+    	'./node_modules/bootstrap/js/dist/alert.js',
     	'./node_modules/handlebars/dist/handlebars.js',
-    	'./node_modules/lodash/core.js',
-    	'./node_modules/lodash/map.js',
+    	'./node_modules/lodash/lodash.js',
     	'resources/js/app.js'
 	], 'public/js/app.js');
 

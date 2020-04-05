@@ -10,6 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.13.0",
         "axios": "^0.19",
         "bootstrap": "^4.4.1",
         "cross-env": "^7.0",
@@ -22,5 +23,9 @@
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0"
+    },
+    "dependencies": {
+        "lodash.flatmapdeep": "^4.10.0",
+        "lodash.map": "^4.6.0"
     }
 }
