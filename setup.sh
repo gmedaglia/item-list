@@ -1,5 +1,7 @@
 cp .env.example .env
 
+cp public/img/sample/* storage/app/public/images/ 
+
 echo -e "############################
 Installing Composer dependencies
 ############################";

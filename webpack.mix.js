@@ -14,6 +14,8 @@ const mix = require('laravel-mix');
 mix.sass('resources/sass/app.scss', 'public/css/app.css')
     .styles([
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
+        './node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css',
+        './node_modules/@fortawesome/fontawesome-free/css/solid.min.css',
         'public/css/app.css'
     ], 'public/css/app.css')
     .scripts([
@@ -26,5 +28,6 @@ mix.sass('resources/sass/app.scss', 'public/css/app.css')
     	'./node_modules/handlebars/dist/handlebars.js',
     	'./node_modules/lodash/lodash.js',
     	'resources/js/app.js'
-	], 'public/js/app.js');
+	], 'public/js/app.js')
+	.copyDirectory('./node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');;
 

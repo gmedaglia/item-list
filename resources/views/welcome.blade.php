@@ -14,33 +14,7 @@
         <style type="text/css">
             body {
                 font-family: 'Roboto', sans-serif;
-            }
-
-
-        .btn-circle.btn-sm { 
-            width: 30px; 
-            height: 30px; 
-            padding: 6px 0px; 
-            border-radius: 15px; 
-            font-size: 8px; 
-            text-align: center; 
-        } 
-        .btn-circle.btn-md { 
-            width: 50px; 
-            height: 50px; 
-            padding: 7px 10px; 
-            border-radius: 25px; 
-            font-size: 10px; 
-            text-align: center; 
-        } 
-        .btn-circle.btn-xl { 
-            width: 70px; 
-            height: 70px; 
-            padding: 10px 16px; 
-            border-radius: 35px; 
-            font-size: 12px; 
-            text-align: center; 
-        }             
+            }           
         </style>
     </head>
     <body class="p-4">
@@ -49,7 +23,11 @@
 
             <div class="row mb-4">
                 <div class="col-md-8"><h3>Items</h3></div>
-                <div class="col-md-4 text-right"><button id="add-item" class="btn btn-primary">New Item</button></div>
+                <div class="col-md-4 text-right">
+                    <button id="add-item" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">
+                        <span class="fas fa-plus"></span> New Item
+                    </button>
+                </div>
             </div>
 
             <div id="item-list">
@@ -58,7 +36,8 @@
 
             @include('toast')
             @include('modal_confirm_delete')
-            @include('modal_create_edit', ['title' => 'Create new item', 'method' => 'post', 'action' => route('items.store')])
+            @include('modal_create_edit', ['id' => 'add-modal', 'title' => 'Create new item', 'method' => 'post'])
+            @include('modal_create_edit', ['id' => 'edit-modal', 'title' => 'Edit item', 'method' => 'put'])
             @include('musta') 
 
         </div>

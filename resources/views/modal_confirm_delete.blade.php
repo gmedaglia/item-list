@@ -2,10 +2,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <p>Confirm deletion of item?</p>
+                <p>Are you sure you want to delete item?</p>
             </div>
             <div class="modal-footer">
-                <button id="cta-confirm-delete" type="button" class="btn btn-danger">Confirm</button>
+                <button id="cta-confirm-delete" type="button" class="btn btn-danger" data-dismiss="modal">Confirm</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>

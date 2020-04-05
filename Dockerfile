@@ -37,3 +37,8 @@ RUN pecl install mongodb \
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
+
+# install phpunit
+RUN wget https://phar.phpunit.de/phpunit-8.5.phar
+RUN chmod +x phpunit-8.5.phar
+RUN mv phpunit-8.5.phar /usr/local/bin/phpunit    

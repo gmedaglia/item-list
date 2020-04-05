@@ -53012,15 +53012,8 @@ function ItemList() {
 		$('.toast').toast({delay: 2000});
 		$('#confirm-delete-modal').modal({show: false});
 		$('#add-modal').modal({show: false});
+		$('#edit-modal').modal({show: false});
 		this.setupEventListeners();
-
-		$('#add-modal, #edit-modal').on('hidden.bs.modal', function (e) {
-			let self = $(this);
-	  		self.find('form').trigger('reset');
-	  		self.find('input[type=hidden]').val('');
-	  		self.find('img').remove();
-	  		self.find('.alert').alert('close');
-		})
 	};
 
 	this.uploadImage = function(file) {        
@@ -53059,7 +53052,10 @@ function ItemList() {
 			        let html = templateScript({"errors": errors});
 			        $('#add-modal form').prepend(html);
 		    	}
-		  	}	        
+		  	},
+		  	beforeSend: function() {
+			    $('body').css('cursor', 'progress');
+		  	}		  	        
 	    }).done(function(response) {
 	    	let item = response.data;
 	        let template = $('#tpl-item').html();
@@ -53075,6 +53071,8 @@ function ItemList() {
 	        $(html).hide().appendTo('#items').fadeIn(300);
 	        //$('body').scrollTo()
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
+	    }).always(function() {
+	    	$('body').css('cursor', 'auto');
 	    });		
 	};
 
@@ -53091,27 +53089,28 @@ function ItemList() {
 			        let html = templateScript({"errors": errors});
 			        $('#add-modal form').prepend(html);
 		    	}
-		  	}	        
+		  	},
+		  	beforeSend: function() {
+			    $('body').css('cursor', 'progress');
+		  	}	
 	    }).done(function(response) {
 	    	let item = response.data;
 	    	let elem = $('#items').find('item-' + id);
-
 	        $('#add-modal').modal('hide');
+	    }).always(function() {
+	    	$('body').css('cursor', 'auto');
 	    });		
 	};	
 
-	this.askForItemDeletionConfirmation = function(itemId) {
-		let modal = $('#confirm-delete-modal');
-		modal.find('#cta-confirm-delete').data('item-id', itemId);
-		modal.modal('show');	
-	};
-
 	this.removeItem = function(itemId) {
-		$('#confirm-delete-modal').modal('hide');
 	    $.ajax({
 	    	method: 'delete',
-	        url: "/api/items/" + itemId
+	        url: "/api/items/" + itemId,
+		  	beforeSend: function() {
+			    $('body').css('cursor', 'progress');
+		  	}	        
 	    }).done(function(response) {
+	    	$('body').css('cursor', 'auto');
 	    	let elem = $('#item-list').find('#item-' + itemId);
 	    	elem.fadeOut(300, function() { 
 	    		$(this).remove(); 
@@ -53170,16 +53169,6 @@ function ItemList() {
             that.storeItem(data);
         });
 
-        $('#add-item').on('click', function(event) {
-            event.preventDefault();
-            $('#add-modal').modal('show');
-        });
-
-        $('#item-list').on('click', '.delete-item', function(event) {
-            event.preventDefault();
-            that.askForItemDeletionConfirmation($(this).data('item-id'));
-        });
-
         $('#cta-confirm-delete').on('click', function (event) {
             that.removeItem($(this).data('item-id'));
         });	
@@ -53187,7 +53176,20 @@ function ItemList() {
         $('#item-image').on('change', function() {
             let file = $(this).get(0).files[0];
             that.uploadImage(file);
-        });        	
+        });
+
+		$('#confirm-delete-modal').on('show.bs.modal', function (e) {
+			let itemId = $(e.relatedTarget).data('item-id');
+			$(e.target).find('#cta-confirm-delete').data('item-id', itemId);
+		});
+
+		$('#add-modal, #edit-modal').on('hidden.bs.modal', function (e) {
+			let self = $(e.target);
+	  		self.find('form').trigger('reset');
+	  		self.find('input[type=hidden]').val('');
+	  		self.find('img').remove();
+	  		self.find('.alert').alert('close');
+		});
 	};    
 
 }
