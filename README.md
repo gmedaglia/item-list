@@ -35,3 +35,7 @@ There are some tests that can be run.
 ```
 phpunit
 ```
+
+## Postman
+
+The `postman` directory contains a Postman collection and a Postman environment that can be imported into Postman and used for testing the API.

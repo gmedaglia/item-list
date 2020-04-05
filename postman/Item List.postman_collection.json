@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "e92fa5da-228d-43ab-8ee7-8ccb79505f3e",
+		"name": "Item List",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/items/:itemId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"items",
+						":itemId"
+					],
+					"variable": [
+						{
+							"key": "itemId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ef6989a-9458-4b8e-8c25-e328b36960a3",
+						"exec": [
+							"postman.setEnvironmentVariable(\"last_uploaded_image\", postman.getResponseHeader(\"Location\").split(\"/\").pop());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/images",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image\": {{last_uploaded_image}},\n\t\"description\": \"Pariatur vero expedita optio soluta rerum. Sint impedit rerum ex vel modi et. Nostrum quibusdam et hic esse in similique et. Tempora aliquid omnis illum molestiae iure. Alias et aliquid repudiandae velit fugiat. Veritatis nam quo dolorem. Voluptatem cum odit doloremque at at voluptas.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image\": {{last_uploaded_image}},\n\t\"description\": \"Pariatur vero expedita optio soluta rerum. Sint impedit rerum ex vel modi et. Nostrum quibusdam et hic esse in similique et. Tempora aliquid omnis illum molestiae iure. Alias et aliquid repudiandae velit fugiat. Veritatis nam quo dolorem. Voluptatem cum odit doloremque at at voluptas.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/items/5e85ed8c47fa260cf66cd0a5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"items",
+						"5e85ed8c47fa260cf66cd0a5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/items/:itemId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"items",
+						":itemId"
+					],
+					"variable": [
+						{
+							"key": "itemId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reorder items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"id\": \"5e855d5b0a49043f166b2ae2\",\n\t\t\"order\": 1\n\t},\n\t{\n\t\t\"id\": \"5e855d5b0a49043f166b2ae7\",\n\t\t\"order\": 2\n\t}\n]\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/items-order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"items-order"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
