@@ -15,4 +15,9 @@ Run setup script.
 bash setup.sh
 ```
 
-Navigate to http://localhost:8000.
+You can run db seeders if you want to have some data populated.
+```
+php artisan db:seed
+```
+
+Navigate to http://localhost:8000 and enjoy!

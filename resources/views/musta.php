@@ -1,5 +1,5 @@
 <script id="tpl-item-list" type="text/x-handlebars-template">
-	<div class="alert alert-warning mb-4">Showing <strong><span id="item-count">{{count}}</span></strong> items. Drag and drop to adjust order.</div>
+	<div class="alert alert-warning mb-4">Item count: <strong><span id="item-count">{{count}}</span></strong>. Drag and drop to adjust order.</div>
 	<div id="items" class="row">
 	    {{#each items}}
 	        {{> item item=this}}
