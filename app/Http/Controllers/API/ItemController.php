@@ -9,6 +9,7 @@ use App\Item;
 use App\Http\Resources\ItemResource;
 use App\Http\Resources\ItemCollection;
 use Illuminate\Database\DatabaseManager as DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
@@ -85,7 +86,7 @@ class ItemController extends Controller
     {
         $item = $this->item->findOrFail($id);
         $item->delete();
-        return response(null, 204);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function updateOrder(ItemOrderRequest $request, DB $db)
@@ -95,6 +96,6 @@ class ItemController extends Controller
                 ->where('_id', $orderConfig['id'])
                 ->update(['order' => $orderConfig['order']]);
         }
-        return response(null, 204);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
