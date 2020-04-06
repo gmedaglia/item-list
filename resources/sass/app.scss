@@ -1,1 +1,6 @@
-//
+body {
+    font-family: 'Roboto', sans-serif;
+    &.wait, &.wait * {
+        cursor: wait !important;
+    }
+}

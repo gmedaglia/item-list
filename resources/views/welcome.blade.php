@@ -7,15 +7,6 @@
         <link media="all" type="text/css" rel="stylesheet" href="/css/app.css" />
 
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
-        <style type="text/css">
-            body {
-                font-family: 'Roboto', sans-serif;
-            }
-            body.wait, body.wait * {
-                cursor: wait !important;
-            }
-        </style>
     </head>
     <body class="p-4">
 

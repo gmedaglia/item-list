@@ -69,7 +69,6 @@ function ItemList() {
 	        });
 	        $('#modal-create').modal('hide');
 	        $(html).hide().appendTo('#items').fadeIn(300);
-	        window.scrollTo(0, $('#item-' + item._id).scrollTop());
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
 	    }).always(function() {
 	    	$('body').removeClass('wait');

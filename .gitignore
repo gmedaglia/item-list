@@ -12,4 +12,6 @@ npm-debug.log
 yarn-error.log
 
 .DS_Store
+/public/js/*
+/public/css/*
 /public/webfonts/fa-*
