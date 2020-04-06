@@ -6,12 +6,12 @@
             </div>                            
             <div class="modal-body">
                 <form id="form-{{ $type }}" method="{{ $method }}" action="">
-                    <input id="field-image-filename-{{ $type }}" type="hidden" name="image-filename" />
+                    <input id="field-image-filename-{{ $type }}" type="hidden" name="image" />
                     <div class="form-row mb-4">
                         <div class="col">
                             <div class="form-group">
                                 <label for="field-image-{{ $type }}">Image</label>
-                                <input id="field-image-{{ $type }}" class="form-control-file" type="file" name="image" />
+                                <input id="field-image-{{ $type }}" class="form-control-file" type="file" name="image-file" />
                                 <small class="form-text text-muted">JPG, GIF or PNG - 320x320.</small>
                             </div>
                         </div>

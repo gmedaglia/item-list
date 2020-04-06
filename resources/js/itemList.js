@@ -15,7 +15,7 @@ function ItemList() {
 
         let modal = $('.modal:visible');
         let uploadedImgContainer = modal.find('.uploaded-img');
-        let filenameField = modal.find('[name=image-filename]');
+        let filenameField = modal.find('[name=image]');
         filenameField.val('');
         uploadedImgContainer.find('img').addClass('d-none');
         uploadedImgContainer.find('.badge').addClass('d-none');
@@ -206,7 +206,7 @@ function ItemList() {
             self.destroyItem($(this).data('item-id'));
         });	
 
-        $('input[name=image]').on('change', function() {
+        $('input[name=image-file]').on('change', function() {
             let file = $(this).get(0).files[0];
             self.uploadImage(file);
         });
@@ -223,7 +223,7 @@ function ItemList() {
 				return o._id == itemId;
 			});
 			let modal = $(e.target);
-			modal.find('[name=image-filename]').val(item.image_url.split('/').pop());
+			modal.find('[name=image]').val(item.image_url.split('/').pop());
 			modal.find('[name=description]').val(item.description);
 			modal.find('#edit-uploaded-img').find('img').attr('src', item.image_url).removeClass('d-none');
 			modal.find('form').data('item-id', itemId);
