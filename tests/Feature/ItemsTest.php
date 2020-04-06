@@ -13,7 +13,7 @@ class ItemsTest extends TestCase
     public function testIndex()
     {
         $items = factory('App\Item', 2)->create();
-        
+
         $response = $this->get(route('items.index'));
         $response
             ->assertJsonPath('metadata.count', 2)
@@ -23,7 +23,7 @@ class ItemsTest extends TestCase
     public function testShow()
     {
         $item = factory('App\Item')->create();
-        
+
         $response = $this->get(route('items.show', ['item' => $item->_id]));
         $response
             ->assertStatus(200)
@@ -31,13 +31,13 @@ class ItemsTest extends TestCase
     }
 
     public function testShowNotFound()
-    {        
+    {
         $response = $this->get(route('items.show', ['item' => '1234567']));
         $response->assertStatus(404);
     }
 
     public function testStore()
-    {        
+    {
         $response = $this->postJson(route('items.store'), ['image' => 'myimage.png', 'description' => 'This is a description']);
         $data = $response->decodeResponseJson();
         $response
@@ -46,16 +46,16 @@ class ItemsTest extends TestCase
     }
 
     public function testStoreNoImage()
-    {        
+    {
         $response = $this->postJson(route('items.store'), ['description' => 'This is a description']);
         $data = $response->decodeResponseJson();
         $response->assertStatus(400);
     }
 
     public function testStoreImageEmpty()
-    {        
+    {
         $response = $this->postJson(route('items.store'), ['image' => '', 'description' => 'This is a description']);
         $data = $response->decodeResponseJson();
         $response->assertStatus(400);
-    } 
+    }
 }

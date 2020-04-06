@@ -24,7 +24,7 @@
 	        				<span class="fas fa-trash"></span>
 	        			</a>
 	        		</li>
-	    		</ul>		    	
+	    		</ul>
 		  	</div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 	<div class="alert alert-danger mb-4">
 	  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    	<span aria-hidden="true">&times;</span>
-	  	</button>		
+	  	</button>
 		<h6>The following errors occured:</h6>
 		<ul>
 		    {{#each errors}}

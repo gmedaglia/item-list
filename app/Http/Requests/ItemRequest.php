@@ -15,5 +15,5 @@ class ItemRequest extends BaseRequest
             'image' => 'required',
             'description' => 'required|max:300'
         ];
-    } 
+    }
 }

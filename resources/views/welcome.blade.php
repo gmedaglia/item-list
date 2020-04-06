@@ -14,12 +14,12 @@
             }
             body.wait, body.wait * {
                 cursor: wait !important;
-            }      
+            }
         </style>
     </head>
     <body class="p-4">
 
-        <div class="container container-fluid">          
+        <div class="container container-fluid">
 
             <div class="row mb-4">
                 <div class="col-md-8"><h3>Items</h3></div>
@@ -31,14 +31,14 @@
             </div>
 
             <div id="item-list">
-                
+
             </div>
 
             @include('toast')
             @include('modal_confirm_delete')
             @include('modal_create_edit', ['type' => 'create', 'title' => 'Create new item', 'method' => 'post'])
             @include('modal_create_edit', ['type' => 'edit', 'title' => 'Edit item', 'method' => 'put'])
-            @include('hb_tpl') 
+            @include('hb_tpl')
 
         </div>
 

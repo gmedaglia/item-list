@@ -11,7 +11,7 @@ use App\Http\Resources\ItemCollection;
 use Illuminate\Database\DatabaseManager as DB;
 
 class ItemController extends Controller
-{   
+{
     private $item;
 
     public function __construct(Item $item)

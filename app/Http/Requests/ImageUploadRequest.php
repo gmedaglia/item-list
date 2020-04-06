@@ -14,5 +14,5 @@ class ImageUploadRequest extends BaseRequest
         return [
             'image' => 'required|image|mimes:jpg,jpeg,gif,png|dimensions:width=320,height=320',
         ];
-    } 
+    }
 }

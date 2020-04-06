@@ -15,5 +15,5 @@ class ItemOrderRequest extends BaseRequest
             '*.id' => 'required|exists:items,_id',
             '*.order' => 'required|integer'
         ];
-    } 
+    }
 }

@@ -9,7 +9,7 @@ function ItemList() {
 		this.setupEventListeners();
 	};
 
-	this.uploadImage = function(file) {        
+	this.uploadImage = function(file) {
         let formData = new FormData();
         formData.append('image', file);
 
@@ -26,7 +26,7 @@ function ItemList() {
             data: formData,
             contentType: false,
             cache: false,
-            processData: false                     
+            processData: false
         }).done(function(response, textStatus, request) {
             let imgUrl = request.getResponseHeader('Location');
             uploadedImgContainer.find('img').attr('src', imgUrl).removeClass('d-none');
@@ -36,7 +36,7 @@ function ItemList() {
         	if (status == 400 || status == 413) {
                 uploadedImgContainer.find('.badge').removeClass('d-none');
             }
-        });		
+        });
 	};
 
 	this.storeItem = function(data) {
@@ -55,15 +55,15 @@ function ItemList() {
 		  	},
 		  	beforeSend: function() {
 			    $('body').addClass('wait');
-		  	}		  	        
+		  	}
 	    }).done(function(response) {
 	    	let item = response.data;
 	        let template = $('#tpl-item').html();
 	        let templateScript = Handlebars.compile(template);
 	        let html = templateScript({
 	        	"item": {
-	        		image_url: item.image_url, 
-	        		_id: item._id, 
+	        		image_url: item.image_url,
+	        		_id: item._id,
 	        		description: item.description
 	        	}
 	        });
@@ -73,7 +73,7 @@ function ItemList() {
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
 	    }).always(function() {
 	    	$('body').removeClass('wait');
-	    });		
+	    });
 	};
 
 	this.updateItem = function(id, data) {
@@ -93,7 +93,7 @@ function ItemList() {
 		  	},
 		  	beforeSend: function() {
 			    $('body').addClass('wait');
-		  	}	
+		  	}
 	    }).done(function(response) {
 	    	let item = response.data;
 	    	let elem = $('#items').find('#item-' + id);
@@ -101,23 +101,23 @@ function ItemList() {
 	        let templateScript = Handlebars.compile(template);
 	        let html = templateScript({
 	        	"item": {
-	        		image_url: item.image_url, 
-	        		_id: item._id, 
+	        		image_url: item.image_url,
+	        		_id: item._id,
 	        		description: item.description
 	        	}
-	        });	 
-	        elem.replaceWith(html);   	
+	        });
+	        elem.replaceWith(html);
 
 			let index = _.findIndex(self.items, function (o) {
 				return o._id == item._id;
-			});	
+			});
 			self.items[index] = item;
 
 	        $('#modal-edit').modal('hide');
 	    }).always(function() {
-	    	$('body').removeClass('wait');    	
-	    });		
-	};	
+	    	$('body').removeClass('wait');
+	    });
+	};
 
 	this.destroyItem = function(itemId) {
 	    $.ajax({
@@ -125,17 +125,17 @@ function ItemList() {
 	        url: "/api/items/" + itemId,
 		  	beforeSend: function() {
 			    $('body').addClass('wait');
-		  	}	        
+		  	}
 	    }).done(function(response) {
 	    	$('body').removeClass('wait');
 	    	let elem = $('#item-list').find('#item-' + itemId);
-	    	elem.fadeOut(300, function() { 
-	    		$(this).remove(); 
+	    	elem.fadeOut(300, function() {
+	    		$(this).remove();
 	    	});
 	    	let count = $('#item-count');
 	        count.html(parseInt(count.html()) - 1);
-	    });		
-	};	
+	    });
+	};
 
 	this.getItems = function() {
 		let self = this;
@@ -147,18 +147,18 @@ function ItemList() {
 	        let templateScript = Handlebars.compile(template);
 	        let html = templateScript({"items": self.items, "count": response.metadata.count});
 	        $('#item-list').append(html);
-	       
+
 	        $('#items').sortable({
 	        	items: '.item',
 	        	start: function(event, ui) {
 	        		$('body').css('cursor', 'move');
-	        	},   	
+	        	},
 	        	stop: function(event, ui) {
 	        		$('body').css('cursor', 'default');
 	        		let rowIds = $(this).sortable("toArray");
 	        		let requestBody = _.map(rowIds, function (item, index) {
 	        			return {
-	        				"id": item.replace('item-', ''), 
+	        				"id": item.replace('item-', ''),
 	        				"order": index
 	        			};
 	        		});
@@ -200,11 +200,11 @@ function ItemList() {
                 return obj;
             }, {});
             self.updateItem(itemId, data);
-        });        
+        });
 
         $('#cta-confirm-delete').on('click', function (event) {
             self.destroyItem($(this).data('item-id'));
-        });	
+        });
 
         $('input[name=image-file]').on('change', function() {
             let file = $(this).get(0).files[0];
@@ -227,7 +227,7 @@ function ItemList() {
 			modal.find('[name=description]').val(item.description);
 			modal.find('#edit-uploaded-img').find('img').attr('src', item.image_url).removeClass('d-none');
 			modal.find('form').data('item-id', itemId);
-		});		
+		});
 
 		$('#modal-create, #modal-edit').on('hidden.bs.modal', function (e) {
 			let modal = $(e.target);
@@ -236,6 +236,6 @@ function ItemList() {
 	  		modal.find('.uploaded-img *').addClass('d-none');
 	  		modal.find('.alert').alert('close');
 		});
-	};    
+	};
 
 }

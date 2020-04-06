@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ $title }}</h5>
-            </div>                            
+            </div>
             <div class="modal-body">
                 <form id="form-{{ $type }}" method="{{ $method }}" action="">
                     <input id="field-image-filename-{{ $type }}" type="hidden" name="image" />
@@ -18,10 +18,10 @@
                         <div class="col">
                             <div id="{{ $type }}-uploaded-img" class="text-right uploaded-img">
                                 <img class="img-fluid d-none" style="max-width: 80px;" src="" />
-                                <span class="badge badge-danger d-none">Invalid file! Check the requirements.</span> 
+                                <span class="badge badge-danger d-none">Invalid file! Check the requirements.</span>
                             </div>
                         </div>
-                    </div>                                   
+                    </div>
                     <div class="form-group">
                         <label for="field-description-{{ $type }}">Description</label>
                         <textarea id="field-description-{{ $type }}" class="form-control" name="description" rows="7"></textarea>
