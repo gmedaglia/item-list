@@ -27,7 +27,7 @@ mix.sass('resources/sass/app.scss', 'public/css/app.css')
     	'./node_modules/bootstrap/js/dist/alert.js',
     	'./node_modules/handlebars/dist/handlebars.js',
     	'./node_modules/lodash/lodash.js',
-    	'resources/js/app.js'
+    	'resources/js/itemList.js'
 	], 'public/js/app.js')
-	.copyDirectory('./node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');;
+	.copyDirectory('./node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');
 

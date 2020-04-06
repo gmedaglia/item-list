@@ -15,12 +15,12 @@
 		    	<p class="card-text"><small>{{item.description}}</small></p>
 	        	<ul class="list-inline text-right">
 	        		<li class="list-inline-item">
-	        			<a href="" data-item-id="{{item._id}}" data-toggle="modal" data-target="#edit-modal">
+	        			<a href="" data-item-id="{{item._id}}" data-toggle="modal" data-target="#modal-edit">
 	        				<span class="fas fa-edit"></span>
 	        			</a>
 	        		</li>
 	        		<li class="list-inline-item">
-	        			<a href="" data-item-id="{{item._id}}" data-toggle="modal" data-target="#confirm-delete-modal">
+	        			<a href="" data-item-id="{{item._id}}" data-toggle="modal" data-target="#modal-confirm-delete">
 	        				<span class="fas fa-trash"></span>
 	        			</a>
 	        		</li>
@@ -36,7 +36,7 @@
 	  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    	<span aria-hidden="true">&times;</span>
 	  	</button>		
-		<h5>The following errors occured:</h5>
+		<h6>The following errors occured:</h6>
 		<ul>
 		    {{#each errors}}
 		        <li>{{this}}</li>

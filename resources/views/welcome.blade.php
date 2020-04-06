@@ -21,10 +21,18 @@
 
         <div class="container container-fluid">
 
+            <div id="modal-img-error" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        Invalid image!
+                    </div>
+                </div>
+            </div>            
+
             <div class="row mb-4">
                 <div class="col-md-8"><h3>Items</h3></div>
                 <div class="col-md-4 text-right">
-                    <button id="add-item" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">
+                    <button id="add-item" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
                         <span class="fas fa-plus"></span> New Item
                     </button>
                 </div>
@@ -36,9 +44,9 @@
 
             @include('toast')
             @include('modal_confirm_delete')
-            @include('modal_create_edit', ['id' => 'add-modal', 'title' => 'Create new item', 'method' => 'post'])
-            @include('modal_create_edit', ['id' => 'edit-modal', 'title' => 'Edit item', 'method' => 'put'])
-            @include('musta') 
+            @include('modal_create_edit', ['type' => 'create', 'title' => 'Create new item', 'method' => 'post'])
+            @include('modal_create_edit', ['type' => 'edit', 'title' => 'Edit item', 'method' => 'put'])
+            @include('hb_tpl') 
 
         </div>
 
@@ -47,7 +55,7 @@
             <script type="text/javascript">
                 let itemList = new ItemList();
                 itemList.init();
-                itemList.retrieve();
+                itemList.getItems();
             </script>
         @endpush
         @stack('scripts')

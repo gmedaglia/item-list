@@ -1,34 +1,40 @@
 function ItemList() {
 
+	this.items = [];
+
     this.init = function() {
 		Handlebars.registerPartial("item", $('#tpl-item').html());
 		$('.toast').toast({delay: 2000});
-		$('#confirm-delete-modal').modal({show: false});
-		$('#add-modal').modal({show: false});
-		$('#edit-modal').modal({show: false});
+		$('#modal-confirm-delete, #modal-create, #modal-edit').modal({show: false});
 		this.setupEventListeners();
 	};
 
 	this.uploadImage = function(file) {        
         let formData = new FormData();
         formData.append('image', file);
+
+        let modal = $('.modal:visible');
+        let uploadedImgContainer = modal.find('.uploaded-img');
+        let filenameField = modal.find('.field-image-filename');
+        filenameField.val('');
+        uploadedImgContainer.html('');
+
         $.ajax({
             method: "post",
             url: "/api/images",
             data: formData,
             contentType: false,
             cache: false,
-            processData: false,
-            statusCode: {
-                400: function(response) {
-                    $('#form-item-create').trigger('reset');
-                    alert('Error!');
-                }
-            }                        
+            processData: false                     
         }).done(function(response, textStatus, request) {
             let imgUrl = request.getResponseHeader('Location');
-            $('#uploaded-img').html('<img class="img-fluid" style="max-width: 80px;" src=" ' + imgUrl + '" />');
-            $('#item-image-filename').val(imgUrl.split('/').pop());
+            uploadedImgContainer.html('<img class="img-fluid" style="max-width: 80px;" src=" ' + imgUrl + '" />');
+            filenameField.val(imgUrl.split('/').pop());
+        }).fail(function (jqXHR) {
+        	let status = jqXHR.status;
+        	if (status == 400 || status == 413) {
+                uploadedImgContainer.html('<span class="badge badge-danger">Invalid image! Check the requirements.</span>');
+            }
         });		
 	};
 
@@ -43,7 +49,7 @@ function ItemList() {
 			        let template = $('#tpl-errors').html();
 			        let templateScript = Handlebars.compile(template);
 			        let html = templateScript({"errors": errors});
-			        $('#add-modal form').prepend(html);
+			        $('#modal-create form').prepend(html);
 		    	}
 		  	},
 		  	beforeSend: function() {
@@ -60,9 +66,10 @@ function ItemList() {
 	        		description: item.description
 	        	}
 	        });
-	        $('#add-modal').modal('hide');
+	        $('#modal-create').modal('hide');
 	        $(html).hide().appendTo('#items').fadeIn(300);
-	        //$('body').scrollTo()
+	        alert($('#item-' + item._id).scrollTop());
+	        window.scrollTo(0, $('#item-' + item._id).scrollTop());
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
 	    }).always(function() {
 	    	$('body').css('cursor', 'auto');
@@ -70,6 +77,7 @@ function ItemList() {
 	};
 
 	this.updateItem = function(id, data) {
+		let self = this;
 	    $.ajax({
 	    	method: 'put',
 	        url: '/api/items/' + id,
@@ -80,7 +88,7 @@ function ItemList() {
 			        let template = $('#tpl-errors').html();
 			        let templateScript = Handlebars.compile(template);
 			        let html = templateScript({"errors": errors});
-			        $('#add-modal form').prepend(html);
+			        $('#modal-edit form').prepend(html);
 		    	}
 		  	},
 		  	beforeSend: function() {
@@ -88,14 +96,30 @@ function ItemList() {
 		  	}	
 	    }).done(function(response) {
 	    	let item = response.data;
-	    	let elem = $('#items').find('item-' + id);
-	        $('#add-modal').modal('hide');
+	    	let elem = $('#items').find('#item-' + id);
+	        let template = $('#tpl-item').html();
+	        let templateScript = Handlebars.compile(template);
+	        let html = templateScript({
+	        	"item": {
+	        		image_url: item.image_url, 
+	        		_id: item._id, 
+	        		description: item.description
+	        	}
+	        });	 
+	        elem.replaceWith(html);   	
+
+			let index = _.findIndex(self.items, function (o) {
+				return o._id == item._id;
+			});	
+			self.items[index] = item;
+
+	        $('#modal-edit').modal('hide');
 	    }).always(function() {
 	    	$('body').css('cursor', 'auto');
 	    });		
 	};	
 
-	this.removeItem = function(itemId) {
+	this.destroyItem = function(itemId) {
 	    $.ajax({
 	    	method: 'delete',
 	        url: "/api/items/" + itemId,
@@ -113,13 +137,15 @@ function ItemList() {
 	    });		
 	};	
 
-	this.retrieve = function() {
+	this.getItems = function() {
+		let self = this;
 	    $.ajax({
 	        url: "/api/items",
 	    }).done(function(response) {
+	    	self.items = response.data;
 	        let template = $('#tpl-item-list').html();
 	        let templateScript = Handlebars.compile(template);
-	        let html = templateScript({"items": response.data, "count": response.metadata.count});
+	        let html = templateScript({"items": self.items, "count": response.metadata.count});
 	        $('#item-list').append(html);
 	       
 	        $('#items').sortable({
@@ -151,38 +177,65 @@ function ItemList() {
     };
 
 	this.setupEventListeners = function() {
-		var that = this;
+		var self = this;
 
-        $('#form-item-create').on('submit', function(event) {
+        $('#form-create').on('submit', function(event) {
             event.preventDefault();
             let data = $(this).serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            that.storeItem(data);
+            self.storeItem(data);
         });
+
+        $('#form-edit').on('submit', function(event) {
+            event.preventDefault();
+            let itemId = $(this).data('item-id');
+            let data = $(this).serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            self.updateItem(itemId, data);
+        });        
 
         $('#cta-confirm-delete').on('click', function (event) {
-            that.removeItem($(this).data('item-id'));
+            self.destroyItem($(this).data('item-id'));
         });	
 
-        $('#item-image').on('change', function() {
+        $('.field-image').on('change', function() {
             let file = $(this).get(0).files[0];
-            that.uploadImage(file);
+            self.uploadImage(file);
         });
 
-		$('#confirm-delete-modal').on('show.bs.modal', function (e) {
+		$('#modal-confirm-delete').on('show.bs.modal', function (e) {
 			let itemId = $(e.relatedTarget).data('item-id');
 			$(e.target).find('#cta-confirm-delete').data('item-id', itemId);
 		});
 
-		$('#add-modal, #edit-modal').on('hidden.bs.modal', function (e) {
-			let self = $(e.target);
-	  		self.find('form').trigger('reset');
-	  		self.find('input[type=hidden]').val('');
-	  		self.find('img').remove();
-	  		self.find('.alert').alert('close');
+		$('#modal-edit').on('show.bs.modal', function (e) {
+			let itemId = $(e.relatedTarget).data('item-id');
+			console.log(self.items);
+			let item = _.find(self.items, function (o) {
+				return o._id == itemId;
+			});
+			let modal = $(e.target);
+			modal.find('input[type=hidden]').val(item.image_url.split('/').pop());
+			modal.find('textarea').val(item.description);
+			modal.find('#edit-uploaded-img').html('<img class="img-fluid" style="max-width: 80px;" src=" ' + item.image_url + '" />');
+			modal.find('form').data('item-id', itemId);
+		});		
+
+		$('#modal-create, #modal-edit').on('hidden.bs.modal', function (e) {
+			let modal = $(e.target);
+	  		modal.find('form').trigger('reset');
+	  		modal.find('input[type=hidden]').val('');
+	  		modal.find('img').remove();
+	  		modal.find('.alert').alert('close');
 		});
+
+		/*$(".modal").on("op-success", function() {
+  			$(this).modal('hide');
+		});*/
 	};    
 
 }
