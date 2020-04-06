@@ -14,7 +14,10 @@
         <style type="text/css">
             body {
                 font-family: 'Roboto', sans-serif;
-            }           
+            }
+            body.wait, body.wait * {
+                cursor: wait !important;
+            }      
         </style>
     </head>
     <body class="p-4">

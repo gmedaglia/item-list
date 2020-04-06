@@ -53022,9 +53022,10 @@ function ItemList() {
 
         let modal = $('.modal:visible');
         let uploadedImgContainer = modal.find('.uploaded-img');
-        let filenameField = modal.find('.field-image-filename');
+        let filenameField = modal.find('[name=image-filename]');
         filenameField.val('');
-        uploadedImgContainer.html('');
+        uploadedImgContainer.find('img').addClass('d-none');
+        uploadedImgContainer.find('.badge').addClass('d-none');
 
         $.ajax({
             method: "post",
@@ -53035,12 +53036,12 @@ function ItemList() {
             processData: false                     
         }).done(function(response, textStatus, request) {
             let imgUrl = request.getResponseHeader('Location');
-            uploadedImgContainer.html('<img class="img-fluid" style="max-width: 80px;" src=" ' + imgUrl + '" />');
+            uploadedImgContainer.find('img').attr('src', imgUrl).removeClass('d-none');
             filenameField.val(imgUrl.split('/').pop());
         }).fail(function (jqXHR) {
         	let status = jqXHR.status;
         	if (status == 400 || status == 413) {
-                uploadedImgContainer.html('<span class="badge badge-danger">Invalid image! Check the requirements.</span>');
+                uploadedImgContainer.find('.badge').removeClass('d-none');
             }
         });		
 	};
@@ -53060,7 +53061,7 @@ function ItemList() {
 		    	}
 		  	},
 		  	beforeSend: function() {
-			    $('body').css('cursor', 'progress');
+			    $('body').addClass('wait');
 		  	}		  	        
 	    }).done(function(response) {
 	    	let item = response.data;
@@ -53075,11 +53076,10 @@ function ItemList() {
 	        });
 	        $('#modal-create').modal('hide');
 	        $(html).hide().appendTo('#items').fadeIn(300);
-	        alert($('#item-' + item._id).scrollTop());
 	        window.scrollTo(0, $('#item-' + item._id).scrollTop());
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
 	    }).always(function() {
-	    	$('body').css('cursor', 'auto');
+	    	$('body').removeClass('wait');
 	    });		
 	};
 
@@ -53099,7 +53099,7 @@ function ItemList() {
 		    	}
 		  	},
 		  	beforeSend: function() {
-			    $('body').css('cursor', 'progress');
+			    $('body').addClass('wait');
 		  	}	
 	    }).done(function(response) {
 	    	let item = response.data;
@@ -53122,7 +53122,7 @@ function ItemList() {
 
 	        $('#modal-edit').modal('hide');
 	    }).always(function() {
-	    	$('body').css('cursor', 'auto');
+	    	$('body').removeClass('wait');    	
 	    });		
 	};	
 
@@ -53131,10 +53131,10 @@ function ItemList() {
 	    	method: 'delete',
 	        url: "/api/items/" + itemId,
 		  	beforeSend: function() {
-			    $('body').css('cursor', 'progress');
+			    $('body').addClass('wait');
 		  	}	        
 	    }).done(function(response) {
-	    	$('body').css('cursor', 'auto');
+	    	$('body').removeClass('wait');
 	    	let elem = $('#item-list').find('#item-' + itemId);
 	    	elem.fadeOut(300, function() { 
 	    		$(this).remove(); 
@@ -53186,8 +53186,13 @@ function ItemList() {
 	this.setupEventListeners = function() {
 		var self = this;
 
+		$('.modal form').on('submit', function(event) {
+			event.preventDefault();
+			let that = $(this);
+			that.find('.alert').alert('close');
+		});
+
         $('#form-create').on('submit', function(event) {
-            event.preventDefault();
             let data = $(this).serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
@@ -53196,7 +53201,6 @@ function ItemList() {
         });
 
         $('#form-edit').on('submit', function(event) {
-            event.preventDefault();
             let itemId = $(this).data('item-id');
             let data = $(this).serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -53209,7 +53213,7 @@ function ItemList() {
             self.destroyItem($(this).data('item-id'));
         });	
 
-        $('.field-image').on('change', function() {
+        $('input[name=image]').on('change', function() {
             let file = $(this).get(0).files[0];
             self.uploadImage(file);
         });
@@ -53226,9 +53230,9 @@ function ItemList() {
 				return o._id == itemId;
 			});
 			let modal = $(e.target);
-			modal.find('input[type=hidden]').val(item.image_url.split('/').pop());
-			modal.find('textarea').val(item.description);
-			modal.find('#edit-uploaded-img').html('<img class="img-fluid" style="max-width: 80px;" src=" ' + item.image_url + '" />');
+			modal.find('[name=image-filename]').val(item.image_url.split('/').pop());
+			modal.find('[name=description]').val(item.description);
+			modal.find('#edit-uploaded-img').find('img').attr('src', item.image_url).removeClass('d-none');
 			modal.find('form').data('item-id', itemId);
 		});		
 
@@ -53236,13 +53240,9 @@ function ItemList() {
 			let modal = $(e.target);
 	  		modal.find('form').trigger('reset');
 	  		modal.find('input[type=hidden]').val('');
-	  		modal.find('img').remove();
+	  		modal.find('.uploaded-img *').addClass('d-none');
 	  		modal.find('.alert').alert('close');
 		});
-
-		/*$(".modal").on("op-success", function() {
-  			$(this).modal('hide');
-		});*/
 	};    
 
 }
