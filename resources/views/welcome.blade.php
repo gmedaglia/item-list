@@ -3,10 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Item List</title>
-        <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="." />
         <link media="all" type="text/css" rel="stylesheet" href="/css/app.css" />
 
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -22,15 +19,7 @@
     </head>
     <body class="p-4">
 
-        <div class="container container-fluid">
-
-            <div id="modal-img-error" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        Invalid image!
-                    </div>
-                </div>
-            </div>            
+        <div class="container container-fluid">          
 
             <div class="row mb-4">
                 <div class="col-md-8"><h3>Items</h3></div>
