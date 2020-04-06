@@ -31,7 +31,7 @@ php artisan rm-img
 
 ## Tests
 
-There are some tests that can be run.
+There are some tests that can be ran.
 ```
 phpunit
 ```
