@@ -40,6 +40,7 @@ function ItemList() {
 	};
 
 	this.storeItem = function(data) {
+        let self = this;
 	    $.ajax({
 	    	method: 'post',
 	        url: '/api/items',
@@ -58,6 +59,7 @@ function ItemList() {
 		  	}
 	    }).done(function(response) {
 	    	let item = response.data;
+            self.items.push(item);
 	        let template = $('#tpl-item').html();
 	        let templateScript = Handlebars.compile(template);
 	        let html = templateScript({

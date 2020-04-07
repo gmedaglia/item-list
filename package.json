@@ -16,7 +16,6 @@
         "cross-env": "^7.0",
         "handlebars": "^4.7.6",
         "jquery": "^3.4.1",
-        "jquery-ui": "^1.12.1",
         "jquery-ui-dist": "^1.12.1",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
@@ -24,8 +23,5 @@
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0"
     },
-    "dependencies": {
-        "lodash.flatmapdeep": "^4.10.0",
-        "lodash.map": "^4.6.0"
-    }
+    "dependencies": {}
 }
