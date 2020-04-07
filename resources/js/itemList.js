@@ -10,6 +10,7 @@ function ItemList() {
 	};
 
 	this.uploadImage = function(file) {
+        let self = this;
         let formData = new FormData();
         formData.append('image', file);
 
@@ -17,8 +18,7 @@ function ItemList() {
         let uploadedImgContainer = modal.find('.uploaded-img');
         let filenameField = modal.find('[name=image]');
         filenameField.val('');
-        uploadedImgContainer.find('img').addClass('d-none');
-        uploadedImgContainer.find('.badge').addClass('d-none');
+        uploadedImgContainer.find('img, .badge').addClass('d-none');
 
         $.ajax({
             method: "post",
@@ -30,7 +30,7 @@ function ItemList() {
         }).done(function(response, textStatus, request) {
             let imgUrl = request.getResponseHeader('Location');
             uploadedImgContainer.find('img').attr('src', imgUrl).removeClass('d-none');
-            filenameField.val(imgUrl.split('/').pop());
+            filenameField.val(self.parseFilenameFromUrl(imgUrl));
         }).fail(function (jqXHR) {
         	let status = jqXHR.status;
         	if (status == 400 || status == 413) {
@@ -203,7 +203,7 @@ function ItemList() {
             self.updateItem(itemId, data);
         });
 
-        $('#cta-confirm-delete').on('click', function (event) {
+        $('#cta-confirm-delete').on('click', function(event) {
             self.destroyItem($(this).data('item-id'));
         });
 
@@ -212,25 +212,24 @@ function ItemList() {
             self.uploadImage(file);
         });
 
-		$('#modal-confirm-delete').on('show.bs.modal', function (e) {
+		$('#modal-confirm-delete').on('show.bs.modal', function(e) {
 			let itemId = $(e.relatedTarget).data('item-id');
 			$(e.target).find('#cta-confirm-delete').data('item-id', itemId);
 		});
 
-		$('#modal-edit').on('show.bs.modal', function (e) {
+		$('#modal-edit').on('show.bs.modal', function(e) {
 			let itemId = $(e.relatedTarget).data('item-id');
-			console.log(self.items);
-			let item = _.find(self.items, function (o) {
+			let item = _.find(self.items, function(o) {
 				return o._id == itemId;
 			});
 			let modal = $(e.target);
-			modal.find('[name=image]').val(item.image_url.split('/').pop());
+			modal.find('[name=image]').val(self.parseFilenameFromUrl(item.image_url));
 			modal.find('[name=description]').val(item.description);
-			modal.find('#edit-uploaded-img').find('img').attr('src', item.image_url).removeClass('d-none');
+			modal.find('.uploaded-img img').attr('src', item.image_url).removeClass('d-none');
 			modal.find('form').data('item-id', itemId);
 		});
 
-		$('#modal-create, #modal-edit').on('hidden.bs.modal', function (e) {
+		$('#modal-create, #modal-edit').on('hidden.bs.modal', function(e) {
 			let modal = $(e.target);
 	  		modal.find('form').trigger('reset');
 	  		modal.find('input[type=hidden]').val('');
@@ -238,5 +237,9 @@ function ItemList() {
 	  		modal.find('.alert').alert('close');
 		});
 	};
+
+    this.parseFilenameFromUrl = function(url) {
+        return url.split('/').pop();
+    };
 
 }

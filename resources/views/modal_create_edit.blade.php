@@ -16,8 +16,8 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div id="{{ $type }}-uploaded-img" class="text-right uploaded-img">
-                                <img class="img-fluid d-none" style="max-width: 80px;" src="" />
+                            <div class="text-right uploaded-img">
+                                <img class="img-fluid d-none" src="" />
                                 <span class="badge badge-danger d-none">Invalid file! Check the requirements.</span>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                         <small class="form-text text-muted">Max. 300 chars.</small>
                     </div>
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary" data-alt-label="Submitting...">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
