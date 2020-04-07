@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 */
 
 
-$img = Storage::files('public/images');
+$img = Storage::files('public/img/sample');
 
 $factory->define(Item::class, function (Faker $faker) use ($img) {
     return [
