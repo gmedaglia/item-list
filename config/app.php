@@ -175,9 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
-        EllipseSynergie\ApiResponse\Laravel\ResponseServiceProvider::class
-
+        Jenssegers\Mongodb\MongodbServiceProvider::class
     ],
 
     /*
