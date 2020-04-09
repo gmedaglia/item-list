@@ -47,7 +47,7 @@ function ItemList() {
 	        data: data,
 		  	statusCode: {
 		    	400: function(response) {
-		      		var errors = _.flatMap(response.responseJSON);
+		      		let errors = _.flatMap(response.responseJSON);
 			        let template = $('#tpl-errors').html();
 			        let templateScript = Handlebars.compile(template);
 			        let html = templateScript({"errors": errors});
@@ -85,7 +85,7 @@ function ItemList() {
 	        data: data,
 		  	statusCode: {
 		    	400: function(response) {
-		      		var errors = _.flatMap(response.responseJSON);
+		      		let errors = _.flatMap(response.responseJSON);
 			        let template = $('#tpl-errors').html();
 			        let templateScript = Handlebars.compile(template);
 			        let html = templateScript({"errors": errors});
@@ -178,7 +178,7 @@ function ItemList() {
     };
 
 	this.setupEventListeners = function() {
-		var self = this;
+		let self = this;
 
 		$('.modal form').on('submit', function(event) {
 			event.preventDefault();
