@@ -4,7 +4,6 @@
 
 use App\Item;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,17 +17,11 @@ use Illuminate\Support\Str;
 */
 
 
-$imagePaths = File::files(public_path('img/sample'));
+$img = Storage::files('public/img/sample');
 
-$factory->define(Item::class, function (Faker $faker) use ($imagePaths) {
-
-    $origin = $imagePaths[rand(0, count($imagePaths) - 1)];
-    $image = basename($origin);
-    $destination = storage_path('app/public/images/' . $image);
-    File::copy($origin, $destination);
-
+$factory->define(Item::class, function (Faker $faker) use ($img) {
     return [
         'description' => $faker->text(300),
-        'image' => $image,
+        'image' => basename($img[rand(0, count($img) - 1)]),
     ];
 });
