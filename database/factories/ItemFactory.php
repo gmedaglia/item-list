@@ -18,11 +18,17 @@ use Illuminate\Support\Str;
 */
 
 
-$img = Storage::files('public/img/sample');
+$imagePaths = File::files(public_path('img/sample'));
 
-$factory->define(Item::class, function (Faker $faker) use ($img) {
+$factory->define(Item::class, function (Faker $faker) use ($imagePaths) {
+
+    $origin = $imagePaths[rand(0, count($imagePaths) - 1)];
+    $image = basename($origin);
+    $destination = storage_path('app/public/images/' . $image);
+    File::copy($origin, $destination);
+
     return [
         'description' => $faker->text(300),
-        'image' => basename($img[rand(0, count($img) - 1)]),
+        'image' => $image,
     ];
 });
