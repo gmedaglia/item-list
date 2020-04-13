@@ -14,9 +14,15 @@ class ItemCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+        return parent::toArray($request);
+    }
+
+    public function with($request)
+    {
         return [
-            'data' => ItemResource::collection($this->collection),
-            'metadata' => ['count' => $this->collection->count()]
+            'metadata' => [
+                'count' => $this->collection->count(),
+            ],
         ];
     }
 }
