@@ -39,7 +39,7 @@ class ItemController extends Controller
      */
     public function store(ItemRequest $request)
     {
-        $item = $this->item->create($request->all());
+        $item = new Item($request->all());
         $item->order = $this->item->max('order') + 1;
         $item->save();
         return (new ItemResource($item))
