@@ -8,7 +8,7 @@ use App\Http\Requests\ItemOrderRequest;
 use App\Item;
 use App\Http\Resources\Item as ItemResource;
 use App\Http\Resources\ItemCollection;
-use Illuminate\Database\DatabaseManager as DB;
+use DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
