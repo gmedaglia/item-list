@@ -13,13 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
-    private $item;
-
-    public function __construct(Item $item)
-    {
-        $this->item = $item;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +20,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = $this->item->ordered()->get();
+        $items = Item::ordered()->get();
         return new ItemCollection($items);
     }
 
@@ -39,8 +32,8 @@ class ItemController extends Controller
      */
     public function store(ItemRequest $request)
     {
-        $item = new Item($request->all());
-        $item->order = $this->item->max('order') + 1;
+        $item = new Item($request->validated());
+        $item->order = Item::max('order') + 1;
         $item->save();
         return (new ItemResource($item))
             ->response()
@@ -55,7 +48,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $item = $this->item->findOrFail($id);
+        $item = Item::findOrFail($id);
         return new ItemResource($item);
     }
 
@@ -68,8 +61,8 @@ class ItemController extends Controller
      */
     public function update(ItemRequest $request, $id)
     {
-        $item = $this->item->findOrFail($id);
-        $item->fill($request->all());
+        $item = Item::findOrFail($id);
+        $item->fill($request->validated());
         $item->save();
         return (new ItemResource($item))
             ->response()
@@ -84,15 +77,15 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $item = $this->item->findOrFail($id);
+        $item = Item::findOrFail($id);
         $item->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function updateOrder(ItemOrderRequest $request, DB $db)
+    public function updateOrder(ItemOrderRequest $request)
     {
         foreach ($request->all() as $orderConfig) {
-            $db->collection('items')
+            DB::collection('items')
                 ->where('_id', $orderConfig['id'])
                 ->update(['order' => $orderConfig['order']]);
         }

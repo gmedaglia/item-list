@@ -33,7 +33,7 @@ function ItemList() {
             filenameField.val(self.parseFilenameFromUrl(imgUrl));
         }).fail(function (jqXHR) {
         	let status = jqXHR.status;
-        	if (status == 400 || status == 413) {
+        	if (status == 422 || status == 413) {
                 uploadedImgContainer.find('.badge').removeClass('d-none');
             }
         });
@@ -45,15 +45,6 @@ function ItemList() {
 	    	method: 'post',
 	        url: '/api/items',
 	        data: data,
-		  	statusCode: {
-		    	400: function(response) {
-		      		let errors = _.flatMap(response.responseJSON);
-			        let template = $('#tpl-errors').html();
-			        let templateScript = Handlebars.compile(template);
-			        let html = templateScript({"errors": errors});
-			        $('#modal-create form').prepend(html);
-		    	}
-		  	},
 		  	beforeSend: function() {
 			    $('body').addClass('wait');
 		  	}
@@ -72,6 +63,12 @@ function ItemList() {
 	        $('#modal-create').modal('hide');
 	        $(html).hide().appendTo('#items').fadeIn(300);
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
+        }).fail(function(response) {
+            let errors = _.flatMap(response.responseJSON.errors);
+            let template = $('#tpl-errors').html();
+            let templateScript = Handlebars.compile(template);
+            let html = templateScript({"errors": errors});
+            $('#modal-create form').prepend(html);
 	    }).always(function() {
 	    	$('body').removeClass('wait');
 	    });
@@ -83,15 +80,6 @@ function ItemList() {
 	    	method: 'put',
 	        url: '/api/items/' + id,
 	        data: data,
-		  	statusCode: {
-		    	400: function(response) {
-		      		let errors = _.flatMap(response.responseJSON);
-			        let template = $('#tpl-errors').html();
-			        let templateScript = Handlebars.compile(template);
-			        let html = templateScript({"errors": errors});
-			        $('#modal-edit form').prepend(html);
-		    	}
-		  	},
 		  	beforeSend: function() {
 			    $('body').addClass('wait');
 		  	}
@@ -115,7 +103,13 @@ function ItemList() {
 			self.items[index] = item;
 
 	        $('#modal-edit').modal('hide');
-	    }).always(function() {
+        }).fail(function(response)  {
+            let errors = _.flatMap(response.responseJSON.errors);
+            let template = $('#tpl-errors').html();
+            let templateScript = Handlebars.compile(template);
+            let html = templateScript({"errors": errors});
+            $('#modal-edit form').prepend(html);
+        }).always(function() {
 	    	$('body').removeClass('wait');
 	    });
 	};

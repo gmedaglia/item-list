@@ -17,11 +17,16 @@ use Faker\Generator as Faker;
 */
 
 
-$img = Storage::files('public/img/sample');
+$path = public_path('img/sample');
+$imgPaths = File::files($path);
 
-$factory->define(Item::class, function (Faker $faker) use ($img) {
+$factory->define(Item::class, function (Faker $faker) use ($imgPaths) {
+    $imgPath = $imgPaths[rand(0, count($imgPaths) - 1)];
+    $img = basename($imgPath);
+    Storage::put('img/', File::get($imgPath));
+
     return [
         'description' => $faker->text(300),
-        'image' => basename($img[rand(0, count($img) - 1)]),
+        'image' => $img,
     ];
 });

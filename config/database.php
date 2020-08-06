@@ -41,7 +41,8 @@ return [
             'database' => env('DB_DATABASE'),
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
-            'options'  => []
+            'options'  => [],
+            'dsn'      => 'mongodb+srv://' . env('DB_USERNAME') . ':' . env('DB_PASSWORD') . '@cluster0.7wczl.mongodb.net/' . env('DB_DATABASE') . '?retryWrites=true&w=majority'
         ],
 
         'sqlite' => [

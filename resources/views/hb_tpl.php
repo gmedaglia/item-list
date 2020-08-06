@@ -36,7 +36,7 @@
 	  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    	<span aria-hidden="true">&times;</span>
 	  	</button>
-		<h6>The following errors occured:</h6>
+		<h6>Oops...</h6>
 		<ul>
 		    {{#each errors}}
 		        <li>{{this}}</li>
