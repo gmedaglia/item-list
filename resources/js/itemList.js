@@ -1,6 +1,7 @@
 function ItemList() {
 
 	this.items = [];
+    this.genericErrorMsg = "Something went wrong. Please try again later.";
 
     this.init = function() {
 		Handlebars.registerPartial("item", $('#tpl-item').html());
@@ -65,6 +66,9 @@ function ItemList() {
 	        $('#item-count').html(parseInt($('#item-count').html()) + 1);
         }).fail(function(response) {
             let errors = _.flatMap(response.responseJSON.errors);
+            if (!errors.length) {
+                errors.push(self.genericErrorMsg);
+            }
             let template = $('#tpl-errors').html();
             let templateScript = Handlebars.compile(template);
             let html = templateScript({"errors": errors});
@@ -105,6 +109,9 @@ function ItemList() {
 	        $('#modal-edit').modal('hide');
         }).fail(function(response)  {
             let errors = _.flatMap(response.responseJSON.errors);
+            if (!errors.length) {
+                errors.push(self.genericErrorMsg);
+            }
             let template = $('#tpl-errors').html();
             let templateScript = Handlebars.compile(template);
             let html = templateScript({"errors": errors});
