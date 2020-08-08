@@ -49,13 +49,13 @@ class ItemsTest extends TestCase
     {
         $response = $this->postJson(route('items.store'), ['description' => 'This is a description']);
         $data = $response->decodeResponseJson();
-        $response->assertStatus(400);
+        $response->assertStatus(422);
     }
 
     public function testStoreImageEmpty()
     {
         $response = $this->postJson(route('items.store'), ['image' => '', 'description' => 'This is a description']);
         $data = $response->decodeResponseJson();
-        $response->assertStatus(400);
+        $response->assertStatus(422);
     }
 }
