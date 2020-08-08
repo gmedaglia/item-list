@@ -84,7 +84,7 @@ class ItemController extends Controller
 
     public function updateOrder(ItemOrderRequest $request)
     {
-        foreach ($request->all() as $orderConfig) {
+        foreach ($request->validated() as $orderConfig) {
             DB::collection('items')
                 ->where('_id', $orderConfig['id'])
                 ->update(['order' => $orderConfig['order']]);

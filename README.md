@@ -35,7 +35,7 @@ php artisan rm-img
 
 There are some tests that can be ran.
 ```
-phpunit
+vendor/bin/phpunit
 ```
 
 ## Postman
