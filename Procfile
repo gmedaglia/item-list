@@ -1,2 +1,2 @@
-release: php artisan migrate --seed
+release: bash setup.sh
 web: vendor/bin/heroku-php-apache2 public/
