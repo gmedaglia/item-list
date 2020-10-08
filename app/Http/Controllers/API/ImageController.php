@@ -12,6 +12,6 @@ class ImageController extends Controller
     {
         $path = $request->image->store('public/images');
         return response(null, Response::HTTP_NO_CONTENT)
-            ->header('Location',  asset($path);
+            ->header('Location',  asset($path));
     }
 }
