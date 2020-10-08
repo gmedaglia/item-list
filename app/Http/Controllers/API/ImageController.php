@@ -10,8 +10,8 @@ class ImageController extends Controller
 {
     public function upload(ImageUploadRequest $request)
     {
-        $request->image->store('public/images');
+        $path = $request->image->store('public/images');
         return response(null, Response::HTTP_NO_CONTENT)
-            ->header('Location',  asset('storage/images/' . $request->image->hashName()));
+            ->header('Location',  asset($path);
     }
 }
