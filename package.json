@@ -15,7 +15,7 @@
         "axios": "^0.21",
         "bootstrap": "^4.4.1",
         "cross-env": "^7.0",
-        "handlebars": "^4.7.6",
+        "handlebars": "^4.7.7",
         "jquery": "^3.5.0",
         "jquery-ui-dist": "^1.12.1",
         "laravel-mix": "^5.0.1",
